@@ -40,7 +40,7 @@ const searchDocuments = async (query) => {
   try {
     const vectorStore = await vectorStorePromise;
     const retriever = vectorStore.asRetriever({
-      k: 5,
+      k: 10,
       searchType: "similarity",
     });
     const documents = await retriever.invoke(query);
@@ -55,7 +55,7 @@ export async function POST(req) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: openai("gpt-4o-mini"),
+    model: openai("gpt-4o"),
     system: `You are an assistant with tool-calling capabilities for question-answering tasks. Always use your tools to answer the question. If you don't know the answer, just say that you don't know. Keep the answer concise, and provide sources and APA citations if possible.`,
     messages,
     temperature: 0,
